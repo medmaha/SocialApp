@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <center class="posts-videos">
+        <div class="videos-wrapper">
+            {% for video in videos %}
+            <div class="video">
+                <div class="title-author">
+                    <span class="">{{video.title}}</span>
+                    <span class="">@{{video.author.username}}</span>
+                </div>
+                <video controls>
+                    <source src={{video.file.url}}>
+                </video>
+                <div class="interactions-date">
+                    <div class="interact">
+                        <form method="post" action="{% url 'like-dislike' video.id %}">
+                            {% csrf_token %}
+                            {% if request.user in video.likes.all %}
+                                <span class="form-submit" class="material-icons form">favorite</span>
+                            {% else %}
+                                <span class="form-submit" class="material-icons form">favorite_border</span>
+                            {% endif %}
+                        </form>
+                        <form method="post" action="{% url 'like-dislike' video.id %}">
+                            {% csrf_token %}
+                            <span class="material-icons">chat_bubble_outline</span>
+                        </form>
+                        <form method="post" action="{% url 'like-dislike' video.id %}">
+                            {% csrf_token %}
+                            <span class="material-icons">share</span>
+                        </form>
+                    </div>
+                    <span class="date">{{video.date_posted}}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    <center/>
+
+    <script>
+        var likeBtns = document.getElementsByClassName('form-submit')
+        for (let index = 0; index < likeBtns.length; index++) {
+            const btn = likeBtns[index];
+            btn.addEventListener('click',(e)=>{
+                // btn.parentElement().submit
+                console.log(e.target.parentElement.submit());
+            })
+            btn.removeEventListener('click',()=>{})
+        }
+
+    </script>
+{% endblock %}

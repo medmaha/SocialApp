@@ -1,0 +1,165 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+
+/* =========================== NavBar ============================= */
+
+nav{
+    background: rgb(80, 79, 79);
+    padding: 1rem;
+    position: fixed;
+    width: 100vw;
+    z-index: 100;
+}
+nav .container {
+    margin: 0 5%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #fff;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+nav .list-wrapper {
+    display: flex;
+    gap: 1.5rem;
+}
+nav .list-wrapper .list{
+    list-style: none;
+}
+
+a{
+    color: #fff;
+    text-decoration: none;
+}
+
+nav input{
+    width: 25rem;
+    height: 2rem;
+    border-radius: 1rem;
+    outline: none;
+    padding: 0 1rem;
+}
+
+
+
+main{
+    margin-top: 5rem;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* ====================================== Posts ============================== */
+.video{
+    margin-top: 1rem;
+}
+.video .title-author{
+    display: flex;
+    justify-content: center;
+    gap: 25rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: solid;
+    padding: 1rem 0;
+    /* background: #eee;  */
+    border-top: 1px solid rgb(81, 79, 79);
+}
+
+.video video{
+    border-radius: 1rem;
+}
+.interact{
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: .3rem;
+}
+
+.interact form{
+    cursor: pointer;
+}
+
+.date{
+    color: rgb(135, 135, 203);
+}
+
+/* ======================== Create Post ======================= */
+
+
+.create-card{
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-card .submit{
+    position: relative;
+    display: flex;
+    justify-content: end;
+}
+
+.create-card .btn{
+    border: none;
+    outline: none;
+    background: rgb(68, 68, 189);
+    padding: .5rem 1rem;
+    cursor: pointer;
+    border-radius: 2rem;
+    margin: 1rem auto;
+}
+
+/* ====================================== Profile ================================ */
+
+.profile-info-wrapper{
+    display: flex;
+    margin: 0 2rem;
+    gap: 2rem;
+    display: grid;
+    grid-template-columns: 20% 55% 25%;
+    height: 100vh;
+}
+
+.profile-info-wrapper .video-posts{
+    height: 100%;
+}
+
+.profile-info-wrapper .videos-wrapper{
+    display: flex;
+    justify-content: center;
+    /* margin: 0 1rem; */
+    max-width: max-content;
+}
+.profile-info-wrapper .videos-wrapper .user-video{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.profile-info-wrapper .videos-wrapper .user-video video{
+    width: 85%;
+}
+/* 
+.video-posts{
+    margin: 0 2rem;
+}
+
+.video-posts .videos-wrapper{
+    background: red;
+    display: grid;
+    grid-template-columns: 24% 24% 24% 24%;
+    gap: .5%;
+    padding: 0 1.75%;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.video-posts .videos-wrapper .video{
+    display: flex;
+    flex-flow: column;
+    width: 400px;
+} */
