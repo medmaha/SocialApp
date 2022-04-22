@@ -37,7 +37,9 @@ def index(request):
     if not request.user.is_authenticated:
         return redirect('login')
 
+#    New Feature
     videos = Video.objects.all()
+    videos.likes.filter(request.user)
 
     return render(request, 'index.html', {
         'videos': videos
