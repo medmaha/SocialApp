@@ -2,6 +2,7 @@ app = 355
 
 for i in range(app):
     print(app % 3 == 0)
+    i += 1
 
 # Fork the repo! AT the top right corner
 
