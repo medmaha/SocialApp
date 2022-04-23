@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 def videos_path(instance, filename):
     name = instance.title.replace(' ', '-')
-    return f'posts/{name[:12]}/{filename}'
+    return f'posts/{instance.author.username[:10]}/{name[:12]}/{filename}'
 
 
 class Video(models.Model):

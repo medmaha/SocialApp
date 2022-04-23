@@ -52,11 +52,15 @@ def index(request):
         return redirect('login')
 
 #    New Feature
+    liked_videos = []
     videos = Video.objects.all()
-    videos.likes.filter(request.user)
+
+    for video in videos:
+        if request.user in video.likes.all():
+            liked_videos.append(video)
 
     return render(request, 'index.html', {
-        'videos': videos
+        'videos': liked_videos
     })
 
 
@@ -106,3 +110,12 @@ def like_dislike_post(request, video_id):
         video.likes.add(request.user)
 
     return redirect(request.META['HTTP_REFERER'])
+
+
+@login_required(login_url='login')
+def explore_posts(request):
+    videos = Video.objects.all().order_by('-date_posted')
+
+    return render(request, 'explore.html', {
+        'videos': videos
+    })
