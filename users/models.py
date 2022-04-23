@@ -44,7 +44,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     is_admin = models.BooleanField(default=False)
 
     profile = models.ImageField(
-        upload_to=profile_path, default='profiles/default.png')
+        upload_to=profile_path, default='profiles/default.png', null=True)
     date_stated = models.DateTimeField(auto_now_add=True)
 
     objects = CustumAccountManager

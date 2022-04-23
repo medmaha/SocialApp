@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="create-card">
+    <fieldset>
+        <legend><h4>Create Post</h4></legend>
+
+        <form method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <label for="email">Email:</label>
+            <input type="email" name="email" placeholder="email address"> <br>
+
+            <label for="username">Username:</label>
+            <input type="text" name="username" placeholder="username"> <br>
+
+            <label for="fullname">Full Name:</label>
+            <input type="text" name="fullname" placeholder="full name"> <br>
+     
+
+            <label for="password">Password:</label>
+            <input type="password" name='password' placeholder="password"> <br>
+
+            <label for="password-2">Confirm Password:</label>
+            <input type="password" name='password-2' placeholder="confirm password"> <br>
+            
+            <label for="terms" style="color: rgb(107, 107, 209);">I agree to Terms & Conditions</label>
+            <input type="checkbox" id="terms">
+            <div class="submit">
+                <button class="" type="submit">Register</button>
+            </div>
+        </form>
+    </fieldset>
+</div>
+{% endblock %}

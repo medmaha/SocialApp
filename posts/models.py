@@ -14,6 +14,7 @@ class Video(models.Model):
     title = models.CharField(max_length=100)
     file = models.FileField(upload_to=videos_path)
     slug = models.SlugField(blank=True)
+    hashtags = models.CharField(max_length=100)
     likes = models.ManyToManyField(
         User, related_name='likes')
 
