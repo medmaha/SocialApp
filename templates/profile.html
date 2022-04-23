@@ -6,11 +6,13 @@
         <div class="image">
             <h3>User Info</h3>
             <div class="profile img">
-                <img src="{{user.profile.url}}" alt="">
+                <img src="{{profile.avater.url}}" alt="">
             </div>
+            <h2></h2>
         </div>
         <div class="user-info">
             <ul>
+                <li>Followers {{profile.followers.count}}</li>
                 <li>{{user.first_name}}</li>
                 <li>{{user.last_name}}</li>
                 <li>{{user.email}}</li>

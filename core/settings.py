@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'app.apps.AppConfig',
-    # 'users.apps.UsersConfig',
+    'users.apps.UsersConfig',
     'posts.apps.PostsConfig',
 ]
 

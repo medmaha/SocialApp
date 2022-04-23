@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from posts.models import Video
 from posts.forms import VideoForm
+from users.models import Profile
 
 
 def register_user(request):
@@ -85,10 +86,13 @@ def create_post(request):
 
 @login_required(login_url='login')
 def user_profile(request, user_id):
-    user = User.objects.get(id=id)
+    user = User.objects.get(id=user_id)
+    profile = Profile.objects.get(user=user)
     video_posts = Video.objects.filter(author=user)
+
     return render(request, 'profile.html', {
         'user': user,
+        'profile':profile,
         'videos': video_posts
     })
 
