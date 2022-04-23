@@ -7,7 +7,7 @@
         <legend><h4>Create Post</h4></legend>
 
         <form method="post" enctype="multipart/form-data">
-            {%csrf_token%}
+            {% csrf_token %}
             <label for="username">Username:</label>
             <input type="text" name="username" placeholder="email address"> <br>
 
