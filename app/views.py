@@ -7,18 +7,32 @@ from posts.models import Video
 from posts.forms import VideoForm
 
 
+def register_user(request):
+    if request.POST.get('email'):
+        email = request.POST['email']
+        username = request.POST['username']
+        fullname = request.POST['fullname']
+        password = request.POST['password']
+
+        User.objects.create_user(
+            email=email, username=username, first_name=fullname, password=password)
+
+        return redirect('login')
+    return render(request, 'register.html')
+
+
 def login_user(request):
     user = None
     if request.method == 'POST':
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(username=username)
         except:
             ''
 
         if user:
-            user = authenticate(username=email, password=password)
+            user = authenticate(username=username, password=password)
             login(request, user)
             return redirect('index')
 

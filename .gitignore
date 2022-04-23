@@ -1,2 +1,3 @@
-/virtualEnv
 .pyc
+/__pycache__
+/virtualEnv
