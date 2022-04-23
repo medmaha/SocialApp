@@ -7,7 +7,7 @@ Fork the repo! AT the top right corner
     type the following command:
         1. python -m venv virtualEnv
         2. python pip install django
-        3. pip install pillow
+        3. python pip install pillow
         
      After installing this tree pakages and you're still on project folder:
         type the following to the terminal
