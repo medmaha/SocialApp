@@ -4,11 +4,12 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('login/', views.login_user, name='login'),
+    path('signup/', views.register_user, name='register'),
     path('logout/', views.logout_user, name='logout'),
 
     path('create-post/', views.create_post, name='create-post'),
-    path('profile/<int:user_id>', views.user_profile, name='profile'),
+    path('profile/<int:user_id>/', views.user_profile, name='profile'),
 
-    path('like-dislike/<int:video_id>',
+    path('like-dislike/<int:video_id>/',
          views.like_dislike_post, name='like-dislike'),
 ]
