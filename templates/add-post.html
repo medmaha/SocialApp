@@ -8,9 +8,12 @@
 
         <form method="post" enctype="multipart/form-data">
             {%csrf_token%}
-            {{form}}
-            <div class="submit">
-                <button class="btn" type="submit">Post</button>
+            {% for field in form %}
+                {{field.label}}
+                <p>{{field}}</p> <br>
+            {% endfor %}
+            <div style="display: flex; justify-content:center;">
+                <button style="background: #6666f1; color:#fff; padding: .5rem 2rem; border-radius: 8px; border: none; letter-spacing: 2px;">Share Post</button>
             </div>
         </form>
     </fieldset>

@@ -1,9 +1,15 @@
+from itertools import chain
+from turtle import Vec2D
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.urls import reverse
+from app.forms import ProfileFrom, ProfileImageForm
 
-from posts.models import Video
+from posts.models import Comment, Video
 from posts.forms import VideoForm
 from users.models import Profile
 
@@ -52,16 +58,21 @@ def index(request):
     if not request.user.is_authenticated:
         return redirect('login')
 
-#    New Feature
-    liked_videos = []
     videos = Video.objects.all()
 
+    my_feed = []
     for video in videos:
         if request.user in video.likes.all():
-            liked_videos.append(video)
+            my_feed.append(video.id)
+
+    my_videos = Video.objects.filter(author=request.user)
+    for my_video in my_videos:
+        my_feed.append(my_video.id)
+
+    my_feed = Video.objects.filter(id__in=my_feed).order_by('-date_posted')
 
     return render(request, 'index.html', {
-        'videos': liked_videos
+        'videos': my_feed
     })
 
 
@@ -70,15 +81,16 @@ def create_post(request):
     form = VideoForm()
     if request.method == 'POST':
         title = request.POST['title']
+        print(request.POST)
 
         form = VideoForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            form.save(commit=False)
-            form.slug = title
-            form.author = request.user
-            form.save()
+            new_post = form.save(commit=False)
+            new_post.author = request.user
+            new_post.slug = title.strip()
+
+            new_post.save()
             return redirect('index')
-        print(request.POST)
     return render(request, 'add-post.html', {
         'form': form
     })
@@ -92,9 +104,46 @@ def user_profile(request, user_id):
 
     return render(request, 'profile.html', {
         'user': user,
-        'profile':profile,
+        'profile': profile,
         'videos': video_posts
     })
+
+
+@login_required(login_url='login')
+def edit_profile(request, user_id):
+    user = User.objects.get(id=user_id)
+    profile = Profile.objects.get(user=user)
+
+    profile_form = ProfileFrom(instance=user)
+    image_form = ProfileImageForm(instance=profile)
+
+    if request.method == 'POST':
+        profile_form = ProfileFrom(instance=user, data=request.POST)
+        image_form = ProfileImageForm(instance=profile, files=request.FILES)
+
+        if profile_form.is_valid() and image_form.is_valid():
+            profile_form.save()
+            image_form.save()
+            return HttpResponseRedirect(reverse('profile', kwargs={'user_id':  user.id}))
+        messages.error(request, 'Bad request with the form')
+
+    return render(request, 'edit-profile.html', {
+        'image_form': image_form,
+        'profile_form': profile_form,
+    })
+
+
+@login_required(login_url='login')
+def follow_unfollow(request, user_id):
+    user = User.objects.get(id=user_id)
+    profile = Profile.objects.get(user=user)
+
+    if request.user in profile.followers.all():
+        profile.followers.remove(request.user)
+    else:
+        profile.followers.add(request.user)
+
+    return redirect(request.META['HTTP_REFERER'])
 
 
 @login_required(login_url='login')
@@ -113,6 +162,28 @@ def like_dislike_post(request, video_id):
     if not is_like:
         video.likes.add(request.user)
 
+    return redirect(request.META['HTTP_REFERER'])
+
+
+@login_required(login_url='login')
+def make_comment(request):
+    if request.method == 'POST':
+        comment = request.POST.get('comment').strip()
+        post_id = request.POST.get('post_id')
+
+        try:
+            video = Video.objects.get(id=post_id)
+        except:
+            messages.success(request, 'Bad request')
+            return redirect(request.META['HTTP_REFERER'])
+
+        if comment:
+            Comment.objects.create(
+                author=request.user,
+                body=comment,
+                post=video
+            )
+        print(comment, post_id)
     return redirect(request.META['HTTP_REFERER'])
 
 

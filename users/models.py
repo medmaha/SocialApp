@@ -8,7 +8,7 @@ import uuid
 
 
 def profile_path(instance, filename):
-    return f'profiles/{instance.username[:15]}/{filename}'
+    return f'profiles/{instance.user.username[:15]}/{filename}'
 
 
 class Profile(models.Model):
@@ -24,12 +24,15 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-    def save(self, *args, **kwargs):
-        img = Image.open(self.avater.path)
-        thumbnails = (70, 70)
-        img.thumbnail(thumbnails)
-        img.save(self.avater.path)
-        return super().save(args, kwargs)
+
+@receiver(post_save, sender=Profile)
+def crop_profile_img(sender, instance, created, **kwargs):
+    if instance.avater:
+        if not created or not created:
+            img = Image.open(instance.avater.path)
+            thumbnails = (200, 200)
+            img.thumbnail(thumbnails)
+            img.save(instance.avater.path)
 
 
 @receiver(post_save, sender=User)

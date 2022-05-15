@@ -13,9 +13,8 @@
             {% else %}
                 <li class="list"><a href="{% url 'index' %}">Home</a></li>
                 <li class="list"><a href="{% url 'explore' %}">Explore</a></li>
-                <li class="list"><a href="{% url 'create-post' %}">Add Post</a></li>
-                <li class="list"><a href="{% url 'profile' request.user.id %}">Profile</a</li>
-                <li class="list"><a href="">@{{request.user.username}}</a</li>
+                <li class="list"><a href="{% url 'create-post' %}">Post</a></li>
+                <li class="list"><a href="{% url 'profile' request.user.id %}">@{{request.user.username}}</a</li>
                 <li class="list"><a href="{% url 'logout' %}">Logout</a></li>
             {% endif %}
         </ul>

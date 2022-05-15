@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="create-card">
+    <fieldset>
+        <legend><h4>Edit Your Profile</h4></legend>
+
+        <form method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <p style="color: #fff; background: #444; padding: .3rem .5rem; border-radius: 7px;">{{image_form}}</p> <br>
+            {% for form in profile_form %}
+            <span>{{form.label}}</span>
+            <p>{{form}}</p> <br>
+            {% endfor %}
+            <div class="submit">
+                <button class="btn" type="submit">Edit</button>
+            </div>
+        </form>
+    </fieldset>
+</div>
+{% endblock %}

@@ -1,53 +1,65 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <center class="posts-videos">
-        <div class="videos-wrapper">
-            {% for video in videos %}
-            <div class="video">
-                <div class="title-author">
-                    <span class="">{{video.title}}</span>
-                    <span class="">@{{video.author.username}}</span>
-                </div>
-                <video controls width="600px">
-                    <source src={{video.file.url}}>
-                </video>
-                <div class="interactions-date">
-                    <div class="interact">
-                        <form method="post" action="{% url 'like-dislike' video.id %}">
-                            {% csrf_token %}
-                            {% if request.user in video.likes.all %}
-                                <span class="form-submit material-icons form">favorite</span>
-                            {% else %}
-                                <span class="form-submit material-icons form">favorite_border</span>
-                            {% endif %}
-                        </form>
-                        <form method="post" action="{% url 'like-dislike' video.id %}">
-                            {% csrf_token %}
-                            <span class="material-icons">chat_bubble_outline</span>
-                        </form>
-                        <form method="post" action="{% url 'like-dislike' video.id %}">
-                            {% csrf_token %}
-                            <span class="material-icons">share</span>
-                        </form>
-                    </div>
-                    <span class="date">{{video.date_posted}}</span>
-                </div>
+<div class="post_videos" style="margin-bottom:3rem;">
+    <div class="videos-wrapper">
+        {% for video in videos %}
+        <div class="video">
+            <div class="title-author">
+                <span class="">{{video.title}}</span>
+                <span class="">@{{video.author.username}}</span>
             </div>
-            {% endfor %}
+            <video controls width="600px">
+                <source src={{video.file.url}}>
+            </video>
+            <div class="interactions-date">
+                <div class="interact">
+                    <form method="post" action="{% url 'like-dislike' video.id %}">
+                        {% csrf_token %}
+                        {% if request.user in video.likes.all %}
+                        <span class="form-submit material-icons form">favorite</span>
+                        {% else %}
+                        <span class="form-submit material-icons form">favorite_border</span>
+                        {% endif %}
+                    </form>
+
+                    <label for="comment-{{video.id}}" class="material-icons comment__toggle" panel="{{video.id}}"
+                        style="cursor: pointer;">chat_bubble_outline</label>
+
+                    <form method="post" action="{% url 'like-dislike' video.id %}">
+                        {% csrf_token %}
+                        <span class="material-icons">share</span>
+                    </form>
+                </div>
+                <span style="text-align: center;" class="date">{{video.date_posted}}</span>
+
+                <!-- Comment Section -->
+                <span id="panel__id-{{video.id}}" class="comment__wrapper d-none">
+
+                    {% for comment in video.comment_set.all %}
+                    <div class="comment" style="margin-left: 2rem; width:80%; display: flex; flex-flow: column;">
+                        <span>@<b>{{comment.author}}</b></span>
+                        <p>{{comment.message}}</p>
+                        <small>{{comment.date_posted}}</small>
+                    </div>
+                    {% endfor %}
+                    <form action="{% url 'comment' %}" method="post" style="margin-top: .5rem;">
+                        {% csrf_token %}
+                        <h5 style="text-align: center;">Make a Comment</h5>
+                        {% for message in messages %} {{message}} {% endfor %}
+
+                        <input type="hidden" name="post_id" value="{{video.id}}">
+                        <textarea id="comment-{{video.id}}" name="comment" cols="60" rows="5"
+                            placeholder="White your comment here..." style="padding: .5rem 1rem;"></textarea> <br>
+                        <button>Share Comment</button>
+                    </form>
+                </span>
+
+            </div>
         </div>
-    <center/>
+        {% endfor %}
+    </div>
+</div>
 
-    <script>
-        var likeBtns = document.getElementsByClassName('form-submit')
-        for (let index = 0; index < likeBtns.length; index++) {
-            const btn = likeBtns[index];
-            btn.addEventListener('click',(e)=>{
-                // btn.parentElement().submit
-                console.log(e.target.parentElement.submit());
-            })
-            btn.removeEventListener('click',()=>{})
-        }
 
-    </script>
 {% endblock %}

@@ -1,3 +1,5 @@
+
+
 *{
     margin: 0;
     box-sizing: border-box;
@@ -53,6 +55,22 @@ main{
 
 
 /* ====================================== Posts ============================== */
+
+.post_videos{
+    display: grid;
+    place-items: center;
+
+}
+
+.post_videos .videos-wrapper{
+    max-width: 700px;
+    width: 500px;
+    display: flex;
+    /* justify-content: center; */
+    flex-flow: column;
+    align-items: center;
+}
+
 .video{
     margin-top: 1rem;
 }
@@ -82,6 +100,8 @@ main{
 }
 
 .date{
+    display: flex;
+    justify-content: center;
     color: rgb(135, 135, 203);
 }
 
@@ -112,54 +132,67 @@ main{
 }
 
 /* ====================================== Profile ================================ */
+.edit-btn{
+    background: rgb(111, 111, 234);
+    color: #fff;
+    padding: 1rem;
+    border-radius: .5rem;
+}
 
-.profile-info-wrapper{
+form.follow{
     display: flex;
-    margin: 0 2rem;
-    gap: 2rem;
-    display: grid;
-    grid-template-columns: 20% 55% 25%;
-    height: 100vh;
+    justify-content:center;
+    margin-top:.6rem;
 }
 
-.profile-info-wrapper .video-posts{
-    height: 100%;
+.profile-img .followers{
+    border-radius: 8px;
+    background: #444;
+    color: #fff;
+    padding: .7rem 1.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    letter-spacing: 1px;
 }
 
-.profile-info-wrapper .videos-wrapper{
+.your-posts{
     display: flex;
     justify-content: center;
-    /* margin: 0 1rem; */
-    max-width: max-content;
-}
-.profile-info-wrapper .videos-wrapper .user-video{
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-}
-
-.profile-info-wrapper .videos-wrapper .user-video video{
-    width: 85%;
-}
-/* 
-.video-posts{
-    margin: 0 2rem;
-}
-
-.video-posts .videos-wrapper{
-    background: red;
-    display: grid;
-    grid-template-columns: 24% 24% 24% 24%;
-    gap: .5%;
-    padding: 0 1.75%;
-    flex-grow: 1;
+    margin-bottom: 3rem;
     width: 100%;
+    margin: 1rem;
 }
 
-.video-posts .videos-wrapper .video{
+.your-posts .posts-wrapper{
+    display: flex;
+    gap: 1rem;
+    flex-flow: column;
+    align-items: center;
+    width: 60%;
+}
+/* =000000000000000000000000000 Commenrt ============================= */
+
+
+
+.comment__wrapper{
+    padding: .3rem;
+    border-top: 1px solid #333;
     display: flex;
     flex-flow: column;
-    width: 400px;
-} */
+    align-items: center;
+}
+.d-none{
+    display: none;
+}
+
+.comment-wrapper .comment p,
+.comment-wrapper .comment small{
+    margin-left: 1rem;
+}
+
+.comment-wrapper .comment small{
+    font-size: .8rem;
+    padding: 0 0.2rem 0;
+    border-bottom: 1px solid #555;
+    color: #555;
+}

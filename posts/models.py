@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 def videos_path(instance, filename):
     name = instance.title.replace(' ', '-')
-    return f'posts/{instance.author.username[:10]}/{name[:12]}/{filename}'
+    return f'posts//{name[:12]}/{filename}'
 
 
 class Video(models.Model):
@@ -22,3 +22,17 @@ class Video(models.Model):
 
     def __str__(self):
         return self.title[:50]
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
+    post = models.ForeignKey('Video', on_delete=models.CASCADE)
+    body = models.CharField(max_length=500)
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.author.username.upper()} " {self.body[:25]} "'
+
+    @property
+    def message(self):
+        return self.body[:35]
